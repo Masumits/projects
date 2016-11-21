@@ -1,0 +1,27 @@
+import urllib.request
+import os
+import html
+import re
+
+def search():
+    for root, dirs, files in os.walk('thai_pages'):
+        for f in files:
+            f2 = open(root + os.sep + f,'r', encoding = 'UTF-8')
+            f1 = f2.read()
+            return f1
+def dicti(f1):
+        d = {}
+        r = re.compile('href=\'/id/.+?\'>(.+?)</a>.+?class=pos>noun</td><td>(.+?)</td>', flags=re.U | re.DOTALL)
+        r1 = r.findall(f1) 
+        if r1:
+             d[r.group(1)] = r.group(2)
+        for k in sorted(d, key = d.get, reverse = True):
+            print(k + d[k]) 
+                 
+def main():
+    a = search()
+    dicti(a)
+    
+
+if __name__ == '__main__':
+    main()
