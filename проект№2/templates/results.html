@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Спасибо за ответ!</title>
+</head>
+<body>
+<form action="http://127.0.0.1:5000/">
+<p><b>Вы ищете слово: {{ language}}, {{ age }}, {{ country }} </b></p><br>
+<br>
+    {%for a in results %}
+    {{ a }}<br><br>
+    {% endfor %}
+<br>
+<br>
+	<p><input type="submit" value="Главная страница"></p>
+	</form>
+</body>
+</html>
