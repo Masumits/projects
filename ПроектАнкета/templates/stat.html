@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Statistics</title>
+ </head>
+<body style="color:#2F4F4F; background-color:#FFE4C4">
+<form action="http://127.0.0.1:5000/">
+  <table border="1">
+  <h1>Спасибо за участие!
+   <tr>
+    <th>Язык</th>
+	<th>Страна</th>
+	<th>Возраст</th>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+	<th>4</th>
+	<th>5</th>
+   </tr>
+   <ul>
+    {% for item in answer %}
+	<tr><td>{{item.language}}</td><td>{{item.country}}</td><td>{{item.age}}</td><td>{{item.applause}}</td><t{{item.applause}}</td><td>{{item.crawling}}</td><td>{{item.waving}}</td><td>{{item.handshake}}</td><td>{{item.shrugging}}</td></tr>
+   {% endfor %}
+   </table>
+   </ul>
+   <p><input type="submit" value="Главная страница"></p>
+   </form>
+ </body>
+</html>

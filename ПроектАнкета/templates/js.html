@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Данные пользователя</title>
+</head>
+<body style="#2F4F4F; background-color:#FFE4C4">
+<form action="http://127.0.0.1:5000/">
+    <ul>
+	{% for username in answer1 %}
+	<p><b>{{username}}</p>
+	{% endfor %}
+	</ul>
+	<p><input type="submit" value="Главная страница"></p>
+</form>
+</body>
+</html>
