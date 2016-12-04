@@ -25,8 +25,8 @@ def reg(link):
             n = regTag.sub('', html.unescape(n))
             n = regSpace.sub(' ', n)
             nr = n.split()
-            for i,m in enumerate(nr):
-                nr[i] = m.strip(',.- \— \"\'\«\»;:\(\)?!/')
+            for i,i1 in enumerate(nr):
+                nr[i] = i1.strip('©.,?!:;()- — \"\'\«\»')
                 nr[i] = nr[i].lower()   
             tex.append(nr)
     print (tex)
