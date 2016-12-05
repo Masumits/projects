@@ -12,10 +12,7 @@ def reg(link):
     tex = []
     for i,u in enumerate(link): 
         page = urllib.request.urlopen(u) 
-        try: 
-            htl = page.read().decode('utf-8') 
-        except: 
-            htl = page.read().decode('windows-1251')
+        htl = page.read().decode('utf-8') 
         r = re.compile(filer[i], flags=re.U | re.DOTALL)
         regex = re.search(r,htl)
         if regex:
@@ -26,7 +23,7 @@ def reg(link):
             n = regSpace.sub(' ', n)
             nr = n.split()
             for i,i1 in enumerate(nr):
-                nr[i] = i1.strip('©.,?!:;()- — \"\'\«\»')
+                nr[i] = i1.strip('©.,?!:;«»- — \"\'()')
                 nr[i] = nr[i].lower()   
             tex.append(nr)
     print (tex)
