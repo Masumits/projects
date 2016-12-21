@@ -28,22 +28,28 @@ def FirstTable():
     return arr
 
 
-def SecondTable(arr, text):
-   file = open('vod_tower.sql',  'a', encoding = 'utf-8')
-   file.write('CREATE TABLE SYKA(id INTERGER PRIMARY KEY, wordform VARCHAR(100), newid VARCHAR(100), lemmaid VARCHAR(100);\n')
-   words = text.split()
-   i = 0
+def SecondTable(arr):
+    file = open('vod_tower.sql',  'a', encoding = 'utf-8')
+    file.write('CREATE TABLE SYKA(id INTERGER PRIMARY KEY, wordform VARCHAR(100), newid VARCHAR(100), lemmaid VARCHAR(100);\n')
+    f = open('tower.txt', 'r', encoding = 'utf-8')
+    text = f.read()
+    words = text.split(' ')
+    for word in words:
+        word = word.lower()
+        word = word.strip('.,-')
+    i = 0
    #arr = {}
    #arr[wordform] = i
-   for el in arr:
-       if el == words:
-           file.write('INSERT INTO SYKA (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + wordform + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
-       return arr
+    for el in arr:
+        if el == word:
+            file.write('INSERT INTO SYKA (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + word + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
+        print (arr)
+        return arr
 
 def main():
     my__stem(start())
     arr = FirstTable()
-    q = SecondTable(arr,text)
+    q = SecondTable(arr)
     
     
 if __name__ == '__main__':
