@@ -25,13 +25,13 @@ def FirstTable():
             arr[wordform] = i
             file.write('INSERT INTO lemmas (id, wordform, lemma) VALUES (' + str(i) + ', ' + wordform.lower()+', ' + lemma.lower()+');\n')
             i += 1
-        file.close()
-        return arr
+    file.close()
+    return arr
 
 
 def SecondTable(arr):
     file = open('vod_tower.sql',  'a', encoding = 'utf-8')
-    file.write('CREATE TABLE SYKA(id INTERGER PRIMARY KEY, wordform VARCHAR(100), newid VARCHAR(100), lemmaid VARCHAR(100);\n')
+    file.write('CREATE TABLE SYKA(id INTERGER PRIMARY KEY, word VARCHAR(100), lemID VARCHAR(100), N VARCHAR(100);\n')
     f = open('tower.txt', 'r', encoding = 'utf-8')
     text = f.read()
     words = text.split(' ')
@@ -42,7 +42,7 @@ def SecondTable(arr):
    #arr[wordform] = i
         for el in arr:
             if el == word:
-                file.write('INSERT INTO SYKA (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + str(el) + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
+                file.write('INSERT INTO SYKA (id, word, lemID, N) VALUES (' + str(i) + ', ' + word + ', ' + str(arr[el]) + ', '+ str(i+1)+ ');\n')
             print (arr)
             return arr
 
