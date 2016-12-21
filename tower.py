@@ -36,7 +36,7 @@ def SecondTable(arr,text):
     words = text.split(' ')
     i1 = 0
     for i,word in enumerate(words):
-        words[i] = word.strip('\n,.f ')
+        words[i] = word.strip('\n,. ')
         for el in arr:
             if el == word:
                 file.write('INSERT INTO words (id, word, lemID, N) VALUES (' + str(i1) + ', ' + word + ', ' + str(arr[el]) + ', '+ str(i1+1)+ ');\n')
