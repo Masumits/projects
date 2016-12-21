@@ -16,35 +16,33 @@ def FirstTable():
     file.write('CREATE TABLE lemmas (id INTERGER PRIMARY KEY, wordform VARCHAR(100), lemma VARCHAR(100);\n')
     i = 0
     lns = fi.readlines()
-    #arr = {}
+    arr = {}
     for line in lns:
         a = re.search('(.*?){(.*?)}', line)
         wordform = a.group(1)
         lemma = a.group(2)
-        #arr[wordform] = i
+        arr[wordform] = i
         file.write('INSERT INTO lemmas (id, wordform, lemma) VALUES (' + str(i) + ', ' + wordform.lower()+', ' + lemma.lower()+');\n')
         i += 1
-    #print (arr)
     file.close()
-    return wordform
+    return arr, wordform
 
 
-def SecondTable(wordform):
+def SecondTable(arr, wordform):
    file = open('vod_tower.sql',  'a', encoding = 'utf-8')
-   file.write('CREATE TABLE syka (id INTERGER PRIMARY KEY, wordform VARCHAR(100), newid VARCHAR(100), lemmaid VARCHAR(100);\n')
-   i = 1
-   arr = {}
-   arr[wordform] = i
+   file.write('CREATE TABLE SYKA(id INTERGER PRIMARY KEY, wordform VARCHAR(100), newid VARCHAR(100), lemmaid VARCHAR(100);\n')
+   i = 0
+   #arr = {}
+   #arr[wordform] = i
    for el in arr:
        if el == wordform:
-           file.write('INSERT INTO syka (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + wordform() + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
-           print (arr)
-           return arr
+           file.write('INSERT INTO SYKA (id, wordform, nemid, lemmaid) VALUES (' + str(i) + ', ' + wordform + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
+   return arr
 
 def main():
     my__stem(start())
-    wordform = FirstTable()
-    arr = SecondTable(wordform)
+    arr, wordform = FirstTable()
+    q = SecondTable(arr, wordform)
     
     
 if __name__ == '__main__':
