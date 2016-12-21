@@ -21,11 +21,12 @@ def FirstTable():
         a = re.search('(.*?){(.*?)}', line)
         wordform = a.group(1)
         lemma = a.group(2)
-        arr[wordform] = i
-        file.write('INSERT INTO lemmas (id, wordform, lemma) VALUES (' + str(i) + ', ' + wordform.lower()+', ' + lemma.lower()+');\n')
-        i += 1
-    file.close()
-    return arr
+        if wordform not in arr:
+            arr[wordform] = i
+            file.write('INSERT INTO lemmas (id, wordform, lemma) VALUES (' + str(i) + ', ' + wordform.lower()+', ' + lemma.lower()+');\n')
+            i += 1
+        file.close()
+        return arr
 
 
 def SecondTable(arr):
@@ -34,17 +35,16 @@ def SecondTable(arr):
     f = open('tower.txt', 'r', encoding = 'utf-8')
     text = f.read()
     words = text.split(' ')
-    for word in words:
-        word = word.lower()
-        word = word.strip('.,-')
-    i = 0
+    for i,word in enumerate(words):
+        words[i] = word.strip(',.!')
+    #i = 0
    #arr = {}
    #arr[wordform] = i
-    for el in arr:
-        if el == word:
-            file.write('INSERT INTO SYKA (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + word + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
-        print (arr)
-        return arr
+        for el in arr:
+            if el == word:
+                file.write('INSERT INTO SYKA (id, wordform, lemma, lemmaid) VALUES (' + str(i) + ', ' + str(el) + ', ' + str(i+1)+ ', ' + str(arr[wordform]) + ');\n')
+            print (arr)
+            return arr
 
 def main():
     my__stem(start())
