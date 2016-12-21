@@ -1,4 +1,5 @@
 import os, re
+
 def start():
     f = open('tower.txt', 'r', encoding = 'utf-8')
     text = f.read()
@@ -42,14 +43,18 @@ def SecondTable(arr):
    #arr[wordform] = i
         for el in arr:
             if el == word:
-                file.write('INSERT INTO SYKA (id, word, lemID, N) VALUES (' + str(i) + ', ' + word + ', ' + str(arr[el]) + ', '+ str(i+1)+ ');\n')
-            print (arr)
-            return arr
+                file.write('INSERT INTO SYKA (id, word, lemID, N) VALUES (' + str(i) + ', ' + el + ', ' + str(arr[el]) + ', '+ str(i+1)+ ');\n')
+                i +=1
+            print (el)
+        file.close()
+        f.close()
+        return arr
+
 
 def main():
     my__stem(start())
     arr = FirstTable()
-    q = SecondTable(arr)
+    SecondTable(FirstTable())
     
     
 if __name__ == '__main__':
