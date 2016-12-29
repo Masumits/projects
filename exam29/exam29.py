@@ -22,10 +22,8 @@ def download_text():
             clean_t = clean_t.replace('\Off', '')
             clean_t = regSpace.sub(' ', clean_t)
             tex.append(clean_t)
-        words = ' '.join(tex)
-        our_words = words.split()
         file = open('words.txt','w',encoding = 'UTF-8')
-        for word in our_words:
+        for word in tex:
             file.write(word + '\n')
             print(word + '\n')
         file.close()
