@@ -1,0 +1,9 @@
+import urllib.request  # импортируем модуль
+import json
+
+req = urllib.request.Request('https://api.vk.com/method/wall.get?owner_id=162436185&post_id=1115') 
+response = urllib.request.urlopen(req) # да, так тоже можно, не обязательно делать это с with, как в примере выше
+result = response.read().decode('utf-8')
+data = json.loads(result) 
+print(result)
+print(data["response"][1]["text"])
