@@ -7,3 +7,27 @@ result = response.read().decode('utf-8')
 data = json.loads(result) 
 print(result)
 print(data["response"][1]["text"])
+
+import urllib.request  # импортируем модуль
+import json
+
+def members():
+    req = urllib.request.Request('https://api.vk.com/method/groups.getMembers?group_id=33374477?c') 
+    response = urllib.request.urlopen(req) # да, так тоже можно, не обязательно делать это с with, как в примере выше
+    result = response.read().decode('utf-8')
+    data = json.loads(result)
+    result = data["response"]["users"]
+    print(result)
+    
+def city(result):
+   for ides in result:
+        req = urlib.request.Request('https://api.vk.com/method/Database.getCitiesById?city=')
+        
+def main():
+    a = members()
+    #city(a)
+    
+
+if __name__ == '__main__':
+    main()
+#Database.getCitiesById
