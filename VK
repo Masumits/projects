@@ -7,10 +7,10 @@ import re
 
 from collections import Counter
 
-def vk_api(method, **debily):
-    #print(debily)
+def vk_api(method, **qwer):
+    #print(qwer)
     api_request = 'https://api.vk.com/method/'+ method + '?'
-    api_request += '&'.join(['{}={}'.format(key, debily[key]) for key in debily])
+    api_request += '&'.join(['{}={}'.format(key, qwer[key]) for key in qwer])
     return json.loads(requests.get(api_request).text)
 
 def txt():
@@ -33,66 +33,61 @@ def txt():
         posts += result['response']["items"]
     print(len(posts))
     #print(norm) #первый раз печатала, потом перестала 
-    #print('прога работает' , type(posts))
+    print('прога работает' , type(posts))
     return posts
 
 def ids(posts):
-    #get_method = "wall.getComments"
-    #group_by_id = "groups.getById"
-    #group_info = vk_api(group_by_id, group_id='diletant_media', v='5.63')
-    #group_id = group_info['response'][0]['id']
+    get_method = "wall.get"
+    group_by_id = "groups.getById"
+    group_info = vk_api(group_by_id, group_id='rollingstoneru', v='5.63')
+    group_id = group_info['response'][0]['id']
     
     comments = []
-    #item_count = 101
-    #result = vk_api('wall.getComments', owner_id=-group_id, v='5.63', count=100)
-    #comments += result["response"]["items"]
-    #import sys
-    #non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
-    #normal = str(comments).translate(non_bmp_map)
+    item_count = 101
+    result = vk_api('wall.getComments', owner_id=-group_id, v='5.63', count=100)
+    comments += result["response"]["items"]
+    import sys
+    non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+    normal = str(comments).translate(non_bmp_map)
     
     for post in posts:
         id_s = post.get('id')
+        print(id_s)
         id_s_string = str(id_s)
         id_s_string_split = id_s_string.split('/n')
         for i in id_s_string_split:
-            result = vk_api('wall.getComments', owner_id=-33538623, post_id=i, v='5.63', count=100)
+            result = vk_api('wall.getComments', owner_id=-group_id, post_id=i, v='5.63', count=100)
             comments += result['response']["items"]
-            print(comments)
-            #for comment in comments:
-                #print (comment)
             #print('прога работает', type(comments))
             #print(len(comments))
-        print (id_s)
+            
             
         text = post.get('text')
-        text_split=text.split('/n') #теперь у нас много постов, а не один , доработать, но потом
+        text_split=text.split('/n') #теперь у нас много постов, а не один
         for el in text_split:
-            #print(el)
             txt_text = open('постыыы.txt', 'a', encoding='UTF-8')
             txt_text.write(''.join(el))
             txt_text.close()
             length = el.split()
-            #print (len(length)) #ура
+            print (len(length)) #ура
         
-        return length 
+        return length , comments
 
-#def work_with_comments(comments): #хочу посчитать сл(овечки)
-    #for comment in comments:
-        #print (comment)
-        #com = comment.get('text')
-        #com_split=text.com('/n') #теперь у нас много постов, а не один)
-        #for el in com_split:
-            #length2 = el.split()
-            #print (len(length2))
+def work_with_comments(comments): #хочу посчитать слова
+    for comment in comments:
+        com = comment.get('text') #пишет ошибку
+        com_split=text.com('/n') 
+        for el in com_split:
+            length2 = el.split()
+            print (len(length2))
                    
-    #return length2     
+    return length2     
 
 def main():
     b = txt()
-    ids(b)
-    #work_with_comments(ids)
+    bb = ids(b)
+    work_with_comments(bb)
     
 
 if __name__ == '__main__':
     main()
-
