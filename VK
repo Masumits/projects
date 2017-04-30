@@ -1,34 +1,98 @@
-import urllib.request  # импортируем модуль
+import requests
 import json
+import re
+#import matplotlib.pyplot as plt
+#from matplotlib import style
+#style.use('ggplot') 
 
-req = urllib.request.Request('https://api.vk.com/method/wall.get?owner_id=162436185&post_id=1115') 
-response = urllib.request.urlopen(req) # да, так тоже можно, не обязательно делать это с with, как в примере выше
-result = response.read().decode('utf-8')
-data = json.loads(result) 
-print(result)
-print(data["response"][1]["text"])
+from collections import Counter
 
-import urllib.request  # импортируем модуль
-import json
+def vk_api(method, **debily):
+    #print(debily)
+    api_request = 'https://api.vk.com/method/'+ method + '?'
+    api_request += '&'.join(['{}={}'.format(key, debily[key]) for key in debily])
+    return json.loads(requests.get(api_request).text)
 
-def members():
-    req = urllib.request.Request('https://api.vk.com/method/groups.getMembers?group_id=33374477?c') 
-    response = urllib.request.urlopen(req) # да, так тоже можно, не обязательно делать это с with, как в примере выше
-    result = response.read().decode('utf-8')
-    data = json.loads(result)
-    result = data["response"]["users"]
-    print(result)
+def txt():
+    get_method = "wall.get"
+    group_by_id = "groups.getById"
+    group_info = vk_api(group_by_id, group_id='diletant_media', v='5.63')
+    group_id = group_info['response'][0]['id']
+
+    posts = []
+    item_count = 101
+    result = vk_api('wall.get', owner_id=-group_id, v='5.63', count=100)
+    posts += result["response"]["items"]
+    import sys
+    non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+    norm = str(posts).translate(non_bmp_map)
     
-def city(result):
-   for ides in result:
-        req = urlib.request.Request('https://api.vk.com/method/Database.getCitiesById?city=')
+    #print(posts)
+    while len(posts) < item_count:
+        result = vk_api('wall.get', owner_id=-group_id, v='5.63', count=100, offset=len(posts))
+        posts += result['response']["items"]
+    print(len(posts))
+    #print(norm) #первый раз печатала, потом перестала 
+    #print('прога работает' , type(posts))
+    return posts
+
+def ids(posts):
+    #get_method = "wall.getComments"
+    #group_by_id = "groups.getById"
+    #group_info = vk_api(group_by_id, group_id='diletant_media', v='5.63')
+    #group_id = group_info['response'][0]['id']
+    
+    comments = []
+    #item_count = 101
+    #result = vk_api('wall.getComments', owner_id=-group_id, v='5.63', count=100)
+    #comments += result["response"]["items"]
+    #import sys
+    #non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
+    #normal = str(comments).translate(non_bmp_map)
+    
+    for post in posts:
+        id_s = post.get('id')
+        id_s_string = str(id_s)
+        id_s_string_split = id_s_string.split('/n')
+        for i in id_s_string_split:
+            result = vk_api('wall.getComments', owner_id=-33538623, post_id=i, v='5.63', count=100)
+            comments += result['response']["items"]
+            print(comments)
+            #for comment in comments:
+                #print (comment)
+            #print('прога работает', type(comments))
+            #print(len(comments))
+        print (id_s)
+            
+        text = post.get('text')
+        text_split=text.split('/n') #теперь у нас много постов, а не один , доработать, но потом
+        for el in text_split:
+            #print(el)
+            txt_text = open('постыыы.txt', 'a', encoding='UTF-8')
+            txt_text.write(''.join(el))
+            txt_text.close()
+            length = el.split()
+            #print (len(length)) #ура
         
+        return length 
+
+#def work_with_comments(comments): #хочу посчитать сл(овечки)
+    #for comment in comments:
+        #print (comment)
+        #com = comment.get('text')
+        #com_split=text.com('/n') #теперь у нас много постов, а не один)
+        #for el in com_split:
+            #length2 = el.split()
+            #print (len(length2))
+                   
+    #return length2     
+
 def main():
-    a = members()
-    #city(a)
+    b = txt()
+    ids(b)
+    #work_with_comments(ids)
     
 
 if __name__ == '__main__':
     main()
-#Database.getCitiesById
 
