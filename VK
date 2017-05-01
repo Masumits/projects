@@ -39,7 +39,7 @@ def txt():
 def ids(posts):
     get_method = "wall.get"
     group_by_id = "groups.getById"
-    group_info = vk_api(group_by_id, group_id='rollingstoneru', v='5.63')
+    group_info = vk_api(group_by_id, group_id='diletant_media', v='5.63')
     group_id = group_info['response'][0]['id']
     
     comments = []
@@ -58,13 +58,13 @@ def ids(posts):
         for i in id_s_string_split:
             result = vk_api('wall.getComments', owner_id=-group_id, post_id=i, v='5.63', count=100)
             comments += result['response']["items"]
-            #print('прога работает', type(comments))
-            #print(len(comments))
+            print('прога работает', type(comments))
             
             
         text = post.get('text')
         text_split=text.split('/n') #теперь у нас много постов, а не один
         for el in text_split:
+            print(el)
             txt_text = open('постыыы.txt', 'a', encoding='UTF-8')
             txt_text.write(''.join(el))
             txt_text.close()
@@ -72,21 +72,12 @@ def ids(posts):
             print (len(length)) #ура
         
         return length , comments
-
-def work_with_comments(comments): #хочу посчитать слова
-    for comment in comments:
-        com = comment.get('text') #пишет ошибку
-        com_split=text.com('/n') 
-        for el in com_split:
-            length2 = el.split()
-            print (len(length2))
-                   
-    return length2     
+   
 
 def main():
     b = txt()
-    bb = ids(b)
-    work_with_comments(bb)
+    ids(b)
+    #work_with_comments(bb)
     
 
 if __name__ == '__main__':
